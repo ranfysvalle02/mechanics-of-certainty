@@ -510,98 +510,42 @@ Run it.
 
 # OUTPUT of `demo.py`
 
-  ┌────────────────────────────────────────────────────────┐
-  │         THE MECHANICS OF CERTAINTY                     │
-  │         A Q-Learning Demonstration                     │
-  └────────────────────────────────────────────────────────┘
+```
+┌──────────────────────────────────────────────────────────────┐
+│ THE MECHANICS OF CERTAINTY                                   │
+└──────────────────────────────────────────────────────────────┘
+ --- HYPOTHESIS ---
+ Certainty is not accuracy. It is merely the feeling a model
+ produces when its training data has been highly consistent.
 
-  Environment: 1D world with rewards (★) at BOTH ends.
-  But each agent only trains on HALF the world.
+ Environment: 1D Corridor [0..10]. Rewards (★) at BOTH ends.
+ Agent A trains [0..6]. Agent B trains [4..10].
 
-  ★ · · · · · · · · ★
-  0 1 2 3 4 5 6 7 8 9
+ --- PHASE 1: ISOLATED TRAINING ---
+ Agent A learned: L=+0.63, R=+0.47 (at pos 5)
+ Agent B learned: L=+0.47, R=+0.63 (at pos 5)
+
+ --- PHASE 2: THE COLLISION (Position 5) ---
+ A: █████████░  99.9% | Says ◄ LEFT 
+ B: █████████░  99.9% | Says RIGHT ►
+ Both engines are highly confident. They completely disagree.
+ Neither is malfunctioning. This IS the function.
+
+ --- PHASE 3: CROSS-TRAINING (Variance as Remedy) ---
+ Exposing agents to the FULL corridor (the other's reality)...
+
+  Eps │   Agt A Conf     │   Agt B Conf
+ ─────┼──────────────────┼──────────────────
+    0 │ █████░  100% L │ █████░  100% R
+   50 │ █████░  100% L │ █████░  100% R
+  100 │ █████░  100% L │ █████░  100% R
+  200 │ ████░░   84% L │ █████░  100% R
+  500 │ ░░░░░░   51% L │ ██░░░░   69% R
+
+ --- CONCLUSION ---
+ Both Q-values converge. Confidence drops. Accuracy rises.
+ The disagreement became navigable not through argument,
+ but through exposure to the out-of-distribution truth.
 
 
-  ════════════════════════════════════════════════════════════
-  ═══ PHASE 1: TRAINING ON DIFFERENT HISTORIES ═══
-  ════════════════════════════════════════════════════════════
-
-  Agent A trains on positions 0-4 (only ever sees the LEFT reward)
-  Agent B trains on positions 5-9 (only ever sees the RIGHT reward)
-
-  Training.. done.
-
-  Agent A: 800 episodes, only positions 0-4
-  Agent B: 800 episodes, only positions 5-9
-
-  ════════════════════════════════════════════════════════════
-  ═══ PHASE 2: THE CERTAINTY ═══
-  ════════════════════════════════════════════════════════════
-
-  Both agents placed at position 5 (center). Asked: 'Which way?'
-
-  Agent A  Q[5]: LEFT=+0.000  RIGHT=+0.000
-           Confidence: ██████████░░░░░░░░░░ 50.0%
-           Decision:   ◄── GO RIGHT
-
-  Agent B  Q[5]: LEFT=+0.772  RIGHT=+0.829
-           Confidence: ██████████░░░░░░░░░░ 54.8%
-           Decision:   GO RIGHT ──►
-
-  ┌──────────────────────────────────────────────────────┐
-  │  Same algorithm. Same confidence. Opposite answers.  │
-  │  Neither is broken. Both are doing exactly what      │
-  │  consistent training data produces: certainty.       │
-  └──────────────────────────────────────────────────────┘
-
-  ════════════════════════════════════════════════════════════
-  ═══ PHASE 3: THE COLLISION ═══
-  ════════════════════════════════════════════════════════════
-
-  What happens when they meet at position 5:
-
-   ★   ·   ·   ·   ·  [AB] ·   ·   ·   ★  
-
-  Agent A says: 'Obviously go left.  I've done this 500 times.'
-  Agent B says: 'Obviously go right. I've done this 500 times.'
-
-  They aren't lying. They aren't stupid. They aren't even wrong
-  about their experience. They just have different experience.
-
-  And the feeling of certainty is IDENTICAL in both.
-
-  ════════════════════════════════════════════════════════════
-  ═══ PHASE 4: CROSS-TRAINING (Variance as Remedy) ═══
-  ════════════════════════════════════════════════════════════
-
-  Now: expose each agent to the OTHER's training data.
-
-    Episodes │ Agent A conf   A says │ Agent B conf   B says
-  ───────────┼───────────────────────┼──────────────────────
-          50 │ ██████░░░░  60.9%   LEFT │ █████░░░░░  59.0%  RIGHT
-         100 │ █████░░░░░  51.5%   LEFT │ █████░░░░░  58.3%  RIGHT
-         200 │ █████░░░░░  54.3%  RIGHT │ █████░░░░░  54.8%  RIGHT
-         500 │ █████░░░░░  54.3%  RIGHT │ █████░░░░░  54.3%  RIGHT
-
-  After cross-training on the FULL environment:
-
-  Agent A  Q[5]: LEFT=+0.777  RIGHT=+0.829
-  Agent B  Q[5]: LEFT=+0.777  RIGHT=+0.829
-
-  Both values are now SIMILAR — because both directions are equally valid.
-  Confidence dropped. Accuracy rose. The disagreement became navigable.
-
-  ════════════════════════════════════════════════════════════
-  ═══ THE POINT ═══
-  ════════════════════════════════════════════════════════════
-
-  Certainty is not accuracy.
-  It is the feeling a model produces when its training data was consistent.
-
-  Two models trained on different slices of the same world
-  will disagree with equal conviction.
-
-  The mechanism is identical.
-  The cure is not argument — it is exposure to the other's training data.
-
-  This applies to neurons, nations, and neural networks alike.
+```
