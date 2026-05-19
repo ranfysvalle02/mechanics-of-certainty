@@ -1,10 +1,10 @@
 # mechanics-of-certainty
 
+![](geopolitics.png)
+
 ---
 
 # The Mechanics of Certainty
-
-![](geopolitics.png)
 
 ### The Mechanics of Certainty: Why Every Side Thinks It's Obvious — And What That Costs
 
